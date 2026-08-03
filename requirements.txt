@@ -1,3 +1,10 @@
 mne
 pyedflib
 numpy
+scipy
+pandas
+h5py
+pyarrow
+scikit-learn
+matplotlib
+tqdm
