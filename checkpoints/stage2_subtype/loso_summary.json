@@ -1,0 +1,17 @@
+{
+  "real_accuracy": 0.8974780701754386,
+  "control_accuracy": 0.8158974358974359,
+  "real_macro_f1": 0.31532312433786,
+  "control_macro_f1": 0.29970801544692477,
+  "n_patients": 13,
+  "class_names": [
+    "focal_aware",
+    "focal_impaired_awareness",
+    "focal_to_bilateral_tonic_clonic"
+  ],
+  "patients_per_class": {
+    "focal_aware": 1,
+    "focal_impaired_awareness": 11,
+    "focal_to_bilateral_tonic_clonic": 1
+  }
+}
