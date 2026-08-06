@@ -1,0 +1,47 @@
+subject,stage1_role,event_id,n_stage1_windows,frac_stage1_positive,detected,true_subtype,outcome,pred_subtype,end_to_end_correct
+PN00,train (fully seen by Stage 1),PN00-1.edf#0,71,1.0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Stage 1),PN00-2.edf#0,55,0.9636363636363636,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Stage 1),PN00-3.edf#0,1743,0.9724612736660929,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Stage 1),PN00-4.edf#0,72,1.0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Stage 1),PN00-5.edf#0,68,0.9558823529411765,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN01,train (fully seen by Stage 1),PN01-1.edf#0,55,0.9454545454545454,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN01,train (fully seen by Stage 1),PN01-1.edf#1,75,0.9733333333333334,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN03,train (fully seen by Stage 1),PN03-1.edf#0,22,0.7727272727272727,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN03,train (fully seen by Stage 1),PN03-2.edf#0,54,0.6851851851851852,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Stage 1),PN05-2.edf#0,36,0.8888888888888888,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Stage 1),PN05-3.edf#0,21,0.8095238095238095,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Stage 1),PN05-4.edf#0,39,0.9230769230769231,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Stage 1),PN06-1.edf#0,61,0.7540983606557377,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Stage 1),PN06-2.edf#0,70,0.9142857142857143,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Stage 1),PN06-3.edf#0,43,0.9534883720930233,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Stage 1),PN06-4.edf#0,55,0.6,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Stage 1),PN06-5.edf#0,40,0.85,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN07,train (fully seen by Stage 1),PN07-1.edf#0,42,0.6904761904761905,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN09,train (fully seen by Stage 1),PN09-1.edf#0,81,0.9135802469135802,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN09,train (fully seen by Stage 1),PN09-2.edf#0,60,0.8833333333333333,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN09,train (fully seen by Stage 1),PN09-3.edf#0,65,0.9230769230769231,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN10,train (fully seen by Stage 1),PN10-1.edf#0,42,0.7857142857142857,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-10.edf#0,15,0.7333333333333333,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-2.edf#0,52,0.8076923076923077,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-3.edf#0,70,0.6428571428571429,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-4.5.6.edf#0,6,0.8333333333333334,True,,stage2_unavailable,,False
+PN10,train (fully seen by Stage 1),PN10-4.5.6.edf#1,20,0.85,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-4.5.6.edf#2,58,0.8103448275862069,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-7.8.9.edf#0,49,0.8163265306122449,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-7.8.9.edf#1,19,0.8421052631578947,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Stage 1),PN10-7.8.9.edf#2,16,0.8125,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN12,train (fully seen by Stage 1),PN12-1.2.edf#0,64,0.921875,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Stage 1),PN12-1.2.edf#1,69,0.9420289855072463,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Stage 1),PN12-3.edf#0,92,0.7934782608695652,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Stage 1),PN12-4.edf#0,64,0.859375,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Stage 1 early-stop signal),PN13-1.edf#0,49,0.6326530612244898,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Stage 1 early-stop signal),PN13-2.edf#0,54,0.4074074074074074,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Stage 1 early-stop signal),PN13-3.edf#0,152,0.7105263157894737,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN14,val (Stage 1 early-stop signal),PN14-1.edf#0,28,0.03571428571428571,False,focal_aware,missed,,False
+PN14,val (Stage 1 early-stop signal),PN14-2.edf#0,13,0.46153846153846156,True,focal_aware,subtyped,focal_impaired_awareness,False
+PN14,val (Stage 1 early-stop signal),PN14-3.edf#0,42,0.023809523809523808,False,focal_aware,missed,,False
+PN14,val (Stage 1 early-stop signal),PN14-4.edf#0,52,0.6538461538461539,True,focal_aware,subtyped,focal_impaired_awareness,False
+PN16,test (unseen by Stage 1),PN16-1.edf#0,114,0.5789473684210527,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN16,test (unseen by Stage 1),PN16-2.edf#0,79,0.7341772151898734,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Stage 1),PN17-1.edf#0,66,0.5909090909090909,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Stage 1),PN17-2.edf#0,84,0.8214285714285714,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True

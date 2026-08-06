@@ -1,0 +1,5 @@
+subject,stage1_role,event_id,n_stage1_windows,frac_stage1_positive,detected,true_subtype,outcome,pred_subtype,end_to_end_correct
+PN16,test (unseen by Stage 1),PN16-1.edf#0,114,0.5789473684210527,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN16,test (unseen by Stage 1),PN16-2.edf#0,79,0.7341772151898734,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Stage 1),PN17-1.edf#0,66,0.5909090909090909,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Stage 1),PN17-2.edf#0,84,0.8214285714285714,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
