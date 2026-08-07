@@ -1,0 +1,5 @@
+subject,phase_a_role,event_id,detected,true_subtype,outcome,pred_subtype,end_to_end_correct
+PN16,test (unseen by Phase A),PN16-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN16,test (unseen by Phase A),PN16-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Phase A),PN17-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Phase A),PN17-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True

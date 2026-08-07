@@ -1,0 +1,16 @@
+{
+  "strict": {
+    "tag": "STRICT",
+    "n_events": 4,
+    "sensitivity": 1.0,
+    "conditional_accuracy": 1.0,
+    "end_to_end_accuracy": 1.0
+  },
+  "broad": {
+    "tag": "BROAD",
+    "n_events": 46,
+    "sensitivity": 0.9347826086956522,
+    "conditional_accuracy": 0.7380952380952381,
+    "end_to_end_accuracy": 0.6739130434782609
+  }
+}
