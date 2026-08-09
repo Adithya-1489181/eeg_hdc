@@ -6,5 +6,6 @@ pandas
 h5py
 pyarrow
 scikit-learn
+imbalanced-learn
 matplotlib
 tqdm

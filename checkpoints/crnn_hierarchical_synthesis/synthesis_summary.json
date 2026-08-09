@@ -1,0 +1,25 @@
+{
+  "protocol": "event-level stratified split + embedding-space SMOTE (not patient-level LOSO)",
+  "real_accuracy": 0.9330960854092527,
+  "real_macro_f1": 0.4496152891536361,
+  "control_accuracy": 0.8461538461538461,
+  "control_macro_f1": 0.3055555555555555,
+  "loso_baseline": {
+    "real_accuracy": 0.893,
+    "real_macro_f1": 0.314,
+    "control_accuracy": 0.822,
+    "control_macro_f1": 0.301
+  },
+  "max_oversample_ratio": 3,
+  "test_frac": 0.3,
+  "train_class_counts_before_smote": {
+    "focal_aware": 29,
+    "focal_impaired_awareness": 322,
+    "focal_to_bilateral_tonic_clonic": 68
+  },
+  "train_class_counts_after_smote": {
+    "focal_aware": 87,
+    "focal_impaired_awareness": 322,
+    "focal_to_bilateral_tonic_clonic": 204
+  }
+}
