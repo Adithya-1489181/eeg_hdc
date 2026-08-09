@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1930" width="1000" height="1930" role="img"
+     aria-label="Hierarchical CRNN architecture diagram: pipeline from raw CHB-MIT and Siena EEG recordings through preprocessing, four convolutional blocks, a bidirectional LSTM, attention pooling, a detection head that gates a conditional subtype head, ending in either a non-seizure result or one of three seizure-subtype labels.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #1a2332;
+      --muted: #57616e;
+      --muted-2: #8791a0;
+      --neutral-fill: #f5f6f8;
+      --neutral-border: #dfe3e8;
+      --neutral-accent: #6b7684;
+      --accent-teal: #2f5aa8;
+      --accent-teal-soft: #eaf1fb;
+      --accent-teal-border: #c7d9f2;
+      --accent-amber: #b9791f;
+      --accent-amber-soft: #fdf1de;
+      --accent-amber-border: #f0d9ab;
+      --note-border: #b9c8e6;
+      --pill-fill: #eaf1fb;
+    }
+    svg { background: var(--bg); font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    text { fill: var(--ink); }
+    .ink { fill: var(--ink); }
+    .muted { fill: var(--muted); }
+    .muted2 { fill: var(--muted-2); }
+    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    .title-text { font-size: 15px; font-weight: 700; }
+    .spec-text { font-size: 11px; }
+    .plain-text { font-size: 11.5px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .shape-label { font-size: 10.5px; }
+    .pill-fill { fill: var(--pill-fill); }
+    .neutral-card { fill: var(--neutral-fill); stroke: var(--neutral-border); }
+    .teal-card { fill: var(--accent-teal-soft); stroke: var(--accent-teal-border); }
+    .amber-card { fill: var(--accent-amber-soft); stroke: var(--accent-amber-border); }
+    .diamond-fill { fill: var(--accent-amber-soft); }
+    .diamond-stroke { stroke: var(--accent-amber); }
+    .arrow-line { stroke: var(--muted-2); stroke-width: 1.6; fill: none; }
+    .accent-bar-teal { fill: var(--accent-teal); }
+    .accent-bar-amber { fill: var(--accent-amber); }
+    .accent-bar-neutral { fill: var(--neutral-accent); }
+    .terminal-box { fill: var(--neutral-fill); stroke: var(--muted-2); stroke-width: 1.4; stroke-dasharray: 5 4; }
+    .note-strip { fill: var(--accent-teal-soft); stroke: var(--note-border); stroke-width: 1.2; stroke-dasharray: 5 4; }
+    .model-title { font-size: 19px; font-weight: 700; }
+    .legend-text { font-size: 10.5px; }
+  </style>
+
+  <rect x="0" y="0" width="1000" height="1930" fill="var(--bg)"></rect>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted-2)"></path>
+    </marker>
+  </defs>
+
+  <!-- ============ HEADER: model name + tiny color key ============ -->
+  <text x="500" y="32" text-anchor="middle" class="model-title ink">Hierarchical CRNN — Seizure Detection &amp; Subtype Classification</text>
+
+  <rect x="228" y="50" width="10" height="10" rx="2" class="accent-bar-teal"></rect>
+  <text x="244" y="59" class="legend-text muted">runs on every clip</text>
+  <rect x="418" y="50" width="10" height="10" rx="2" class="accent-bar-amber"></rect>
+  <text x="434" y="59" class="legend-text muted">only if flagged as seizure</text>
+  <rect x="640" y="50" width="10" height="10" rx="2" fill="none" stroke="var(--muted-2)" stroke-width="1.3" stroke-dasharray="3 2"></rect>
+  <text x="656" y="59" class="legend-text muted">copied / reused weights</text>
+
+  <g transform="translate(0, 72)">
+    <!-- ============ RAW DATA ============ -->
+    <text x="100" y="26" class="section-label muted2">Raw EEG recordings — two hospitals, two formats</text>
+
+    <rect x="100" y="40" width="390" height="90" rx="7" class="neutral-card" stroke-width="1.2"></rect>
+    <rect x="100" y="40" width="5" height="90" class="accent-bar-neutral"></rect>
+    <text x="120" y="66" class="title-text ink">CHB-MIT Scalp EEG</text>
+    <text x="120" y="86" class="spec-text mono muted">686 recordings · 256 Hz · 60 Hz mains hum</text>
+    <text x="120" y="106" class="plain-text muted">Seizure / non-seizure labels only</text>
+
+    <rect x="510" y="40" width="390" height="90" rx="7" class="neutral-card" stroke-width="1.2"></rect>
+    <rect x="510" y="40" width="5" height="90" class="accent-bar-neutral"></rect>
+    <text x="530" y="66" class="title-text ink">Siena Scalp EEG</text>
+    <text x="530" y="86" class="spec-text mono muted">41 recordings · 512 Hz · 50 Hz mains hum</text>
+    <text x="530" y="106" class="plain-text muted">Also labels which seizure subtype</text>
+
+    <line x1="295" y1="130" x2="345" y2="184" class="arrow-line" marker-end="url(#arrow)"></line>
+    <line x1="705" y1="130" x2="655" y2="184" class="arrow-line" marker-end="url(#arrow)"></line>
+
+    <!-- ============ PREPROCESSING ============ -->
+    <text x="100" y="176" class="section-label muted2">Preprocessing — make both hospitals' data look identical</text>
+
+    <rect x="100" y="190" width="800" height="140" rx="7" class="neutral-card" stroke-width="1.2"></rect>
+    <rect x="100" y="190" width="5" height="140" class="accent-bar-neutral"></rect>
+    <text x="120" y="216" class="title-text ink">Harmonize, filter, window, normalize</text>
+    <text x="120" y="240" class="plain-text muted">Re-montage → same 18 electrode-pairs for both hospitals</text>
+    <text x="120" y="260" class="plain-text muted">Resample → 256 Hz for every recording (Siena's 512 Hz is halved)</text>
+    <text x="120" y="280" class="plain-text muted">Filter → keep 0.5–45 Hz brain activity, remove 60/50 Hz mains hum</text>
+    <text x="120" y="300" class="plain-text muted">Window into clips, then rescale each electrode to mean 0 / spread 1</text>
+
+    <line x1="500" y1="330" x2="500" y2="404" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="352" text-anchor="middle" class="shape-label mono muted2">(18 electrodes × T samples)</text>
+    <text x="500" y="368" text-anchor="middle" class="shape-label mono muted2">T = 1024 (4s clip) or 2560 (10s clip)</text>
+
+    <!-- ============ CONV BLOCKS ============ -->
+    <text x="100" y="396" class="section-label muted2">Convolutional feature extractor — 4 stacked blocks</text>
+
+    <rect x="100" y="410" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="410" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="436" class="title-text ink">Conv Block 1</text>
+    <text x="120" y="458" class="spec-text mono muted">Conv1d(18→32, kernel 63, stride 2) → BatchNorm → ReLU → Dropout</text>
+    <text x="120" y="478" class="plain-text muted">Scans for short local wave-shapes across nearby time-steps</text>
+
+    <line x1="500" y1="502" x2="500" y2="526" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="520" text-anchor="middle" class="shape-label mono muted2">(32 channels, T/2)</text>
+
+    <rect x="100" y="532" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="532" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="558" class="title-text ink">Conv Block 2</text>
+    <text x="120" y="580" class="spec-text mono muted">Conv1d(32→64, kernel 31, stride 2) → BatchNorm → ReLU → Dropout</text>
+    <text x="120" y="600" class="plain-text muted">Combines Block 1's small patterns into slightly longer motifs</text>
+
+    <line x1="500" y1="624" x2="500" y2="648" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="642" text-anchor="middle" class="shape-label mono muted2">(64 channels, T/4)</text>
+
+    <rect x="100" y="654" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="654" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="680" class="title-text ink">Conv Block 3</text>
+    <text x="120" y="702" class="spec-text mono muted">Conv1d(64→128, kernel 15, stride 2) → BatchNorm → ReLU → Dropout</text>
+    <text x="120" y="722" class="plain-text muted">Builds more abstract, seizure-relevant shapes from those motifs</text>
+
+    <line x1="500" y1="746" x2="500" y2="770" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="764" text-anchor="middle" class="shape-label mono muted2">(128 channels, T/8)</text>
+
+    <rect x="100" y="776" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="776" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="802" class="title-text ink">Conv Block 4</text>
+    <text x="120" y="824" class="spec-text mono muted">Conv1d(128→128, kernel 7, stride 2) → BatchNorm → ReLU → Dropout</text>
+    <text x="120" y="844" class="plain-text muted">Final compression pass before the sequence goes to the recurrent layer</text>
+
+    <line x1="500" y1="868" x2="500" y2="914" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="886" text-anchor="middle" class="shape-label mono muted2">(128 channels, T/16)</text>
+
+    <!-- ============ RECURRENT + ATTENTION ============ -->
+    <text x="100" y="906" class="section-label muted2">Recurrent + attention layers — read the sequence as a whole</text>
+
+    <rect x="100" y="920" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="920" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="946" class="title-text ink">Bidirectional LSTM</text>
+    <text x="120" y="968" class="spec-text mono muted">LSTM(128→64, bidirectional) — one pass forward, one pass backward</text>
+    <text x="120" y="988" class="plain-text muted">Tracks how the pattern changes moment-to-moment across the clip</text>
+
+    <line x1="500" y1="1012" x2="500" y2="1036" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="1030" text-anchor="middle" class="shape-label mono muted2">(128 channels, T/16)</text>
+
+    <rect x="100" y="1042" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="1042" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="1068" class="title-text ink">Attention Pooling</text>
+    <text x="120" y="1090" class="spec-text mono muted">Linear(128→64) → Tanh → Linear(64→1) → Softmax over time → weighted sum</text>
+    <text x="120" y="1110" class="plain-text muted">Learns which moments in the clip matter most, then blends them into one summary</text>
+
+    <line x1="500" y1="1134" x2="500" y2="1166" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="1156" text-anchor="middle" class="shape-label mono muted2">(128 numbers — no more time axis)</text>
+
+    <rect x="390" y="1170" width="220" height="50" rx="25" class="pill-fill" stroke="var(--accent-teal)" stroke-width="1.4"></rect>
+    <text x="500" y="1200" text-anchor="middle" class="title-text ink">Clip fingerprint</text>
+
+    <line x1="500" y1="1220" x2="500" y2="1254" class="arrow-line" marker-end="url(#arrow)"></line>
+
+    <!-- ============ PREDICTION HEADS ============ -->
+    <text x="100" y="1246" class="section-label muted2">Prediction heads — both read the same fingerprint</text>
+
+    <rect x="100" y="1260" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="1260" width="5" height="92" class="accent-bar-teal"></rect>
+    <text x="120" y="1286" class="title-text ink">Detection Head</text>
+    <text x="120" y="1308" class="spec-text mono muted">Linear(128→64) → ReLU → Dropout → Linear(64→1) → Sigmoid</text>
+    <text x="120" y="1328" class="plain-text muted">Turns the fingerprint into one number: how likely this clip is a seizure</text>
+
+    <line x1="500" y1="1352" x2="500" y2="1378" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="500" y="1372" text-anchor="middle" class="shape-label mono muted2">seizure probability, 0–1</text>
+
+    <polygon points="500,1382 670,1452 500,1522 330,1452" class="diamond-fill diamond-stroke" stroke-width="1.4"></polygon>
+    <text x="500" y="1446" text-anchor="middle" class="plain-text ink" font-weight="700">probability</text>
+    <text x="500" y="1462" text-anchor="middle" class="plain-text ink" font-weight="700">≥ 0.40 ?</text>
+
+    <line x1="670" y1="1452" x2="706" y2="1452" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="688" y="1440" text-anchor="middle" class="shape-label muted2">no</text>
+    <rect x="710" y="1417" width="180" height="70" rx="7" class="terminal-box"></rect>
+    <text x="800" y="1447" text-anchor="middle" class="plain-text ink" font-weight="700">Non-seizure</text>
+    <text x="800" y="1465" text-anchor="middle" class="plain-text muted">stop here</text>
+
+    <line x1="500" y1="1522" x2="500" y2="1550" class="arrow-line" marker-end="url(#arrow)"></line>
+    <text x="516" y="1540" class="shape-label muted2">yes</text>
+
+    <rect x="100" y="1556" width="800" height="92" rx="7" class="amber-card" stroke-width="1.2"></rect>
+    <rect x="100" y="1556" width="5" height="92" class="accent-bar-amber"></rect>
+    <text x="120" y="1582" class="title-text ink">Subtype Head</text>
+    <text x="120" y="1604" class="spec-text mono muted">Linear(128→64) → ReLU → Dropout → Linear(64→3) → Softmax</text>
+    <text x="120" y="1624" class="plain-text muted">Only runs once flagged — scores each of the 3 seizure subtypes</text>
+
+    <rect x="100" y="1656" width="800" height="34" rx="6" class="note-strip"></rect>
+    <text x="500" y="1678" text-anchor="middle" class="shape-label mono ink">Weight transfer: backbone copied from the trained Detection path, fine-tuned per patient</text>
+
+    <line x1="260" y1="1690" x2="260" y2="1712" class="arrow-line" marker-end="url(#arrow)"></line>
+    <line x1="500" y1="1690" x2="500" y2="1712" class="arrow-line" marker-end="url(#arrow)"></line>
+    <line x1="740" y1="1690" x2="740" y2="1712" class="arrow-line" marker-end="url(#arrow)"></line>
+
+    <!-- ============ OUTPUTS ============ -->
+    <rect x="100" y="1720" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="225" y="1752" text-anchor="middle" class="plain-text ink" font-weight="700">Focal Aware</text>
+    <text x="225" y="1772" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+
+    <rect x="375" y="1720" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="500" y="1744" text-anchor="middle" class="plain-text ink" font-weight="700">Focal Impaired</text>
+    <text x="500" y="1760" text-anchor="middle" class="plain-text ink" font-weight="700">Awareness</text>
+    <text x="500" y="1782" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+
+    <rect x="650" y="1720" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="775" y="1744" text-anchor="middle" class="plain-text ink" font-weight="700">Focal → Bilateral</text>
+    <text x="775" y="1760" text-anchor="middle" class="plain-text ink" font-weight="700">Tonic-Clonic</text>
+    <text x="775" y="1782" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+  </g>
+</svg>
