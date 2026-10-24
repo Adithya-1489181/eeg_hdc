@@ -54,11 +54,6 @@
         verdictTitle: $("verdictTitle"),
         verdictSub: $("verdictSub"),
 
-        classification: $("classification"),
-        classTitle: $("classTitle"),
-        classConf: $("classConf"),
-        classTag: $("classTag"),
-        distrib: $("distrib"),
 
         eventList: $("eventList"),
         elItems: $("elItems"),
@@ -247,21 +242,9 @@
         // Classification
         const regions = data.seizure_regions || [];
         if (regions.length > 0) {
-            const best = regions.reduce((a, b) =>
-                b.confidence > a.confidence ? b : a
-            );
-            els.classification.classList.remove("hidden");
-            els.classTitle.textContent =
-                best.classification || best.predicted_class || "—";
-            els.classConf.textContent =
-                "Confidence · " + Math.round(best.confidence * 100) + "%";
-            els.classTag.textContent =
-                Math.round(best.confidence * 100) + "%";
-            renderDistrib(best);
             renderEvents(regions);
             els.eventList.classList.remove("hidden");
         } else {
-            els.classification.classList.add("hidden");
             els.eventList.classList.add("hidden");
         }
 
@@ -285,30 +268,32 @@
         return m + ":" + String(s).padStart(2, "0");
     }
 
-    function renderDistrib(region) {
-        const probs = region.probabilities || {};
-        const entries = Object.entries(probs).sort((a, b) => b[1] - a[1]);
+    function distribHTML(probs) {
+        const entries = Object.entries(probs || {}).sort((a, b) => b[1] - a[1]);
         const topKey = entries.length ? entries[0][0] : null;
 
-        els.distrib.innerHTML = "";
-        entries.forEach(([key, val]) => {
-            const pct = Math.round(val * 100);
-            const row = document.createElement("div");
-            row.className = "d-row" + (key === topKey ? " top" : "");
-            row.innerHTML =
-                '<div class="d-row-top">' +
-                '<span class="d-name">' + (PROB_LABELS[key] || key) + "</span>" +
-                '<span class="d-val">' + pct + "%</span></div>" +
-                '<div class="d-track"><div class="d-fill" data-pct="' +
-                pct + '"></div></div>';
-            els.distrib.appendChild(row);
-        });
-
-        requestAnimationFrame(() => {
-            els.distrib.querySelectorAll(".d-fill").forEach((f) => {
-                f.style.width = f.dataset.pct + "%";
-            });
-        });
+        return (
+            '<div class="distrib">' +
+            entries
+                .map(([key, val]) => {
+                    const pct = Math.round(val * 100);
+                    return (
+                        '<div class="d-row' +
+                        (key === topKey ? " top" : "") +
+                        '">' +
+                        '<div class="d-row-top">' +
+                        '<span class="d-name">' +
+                        (PROB_LABELS[key] || key) +
+                        "</span>" +
+                        '<span class="d-val">' + pct + "%</span></div>" +
+                        '<div class="d-track"><div class="d-fill" data-pct="' +
+                        pct +
+                        '"></div></div></div>'
+                    );
+                })
+                .join("") +
+            "</div>"
+        );
     }
 
     function renderEvents(regions) {
@@ -316,14 +301,19 @@
         regions.forEach((r, i) => {
             const item = document.createElement("div");
             item.className = "el-item";
-            const cls = r.classification || r.predicted_class || "Unknown";
             item.innerHTML =
                 '<div class="el-time">' +
                 "<span>Event " + (i + 1) + " · " +
                 fmtTime(r.start_s) + " — " + fmtTime(r.end_s) + "</span>" +
                 "<span>" + Math.round(r.duration_s) + "s duration</span></div>" +
-                '<div class="el-class">' + cls + "</div>";
+                distribHTML(r.probabilities);
             els.elItems.appendChild(item);
+        });
+
+        requestAnimationFrame(() => {
+            els.elItems.querySelectorAll(".d-fill").forEach((f) => {
+                f.style.width = f.dataset.pct + "%";
+            });
         });
     }
 
