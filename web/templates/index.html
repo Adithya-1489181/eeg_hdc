@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroScan — EEG Seizure Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+
+        <header class="topbar">
+            <div class="topbar-inner">
+                <a class="brand" href="/">
+                    <span class="brand-mark">NS</span>
+                    <span class="brand-word">NeuroScan</span>
+                </a>
+                <div class="model-status" id="modelStatus">
+                    <span class="live-dot" id="statusDot"></span>
+                    <span id="statusText">Checking model…</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+
+            <!-- UPLOAD VIEW -->
+            <section class="view view-upload active" id="viewUpload">
+                <div class="upload-wrap">
+                    <div class="upload-heading">
+                        <h1>EEG Seizure Analysis</h1>
+                        <p>Upload a raw <code>.edf</code> recording to visualize the signal and identify seizure activity.</p>
+                    </div>
+
+                    <div class="dropzone" id="dropZone" tabindex="0" role="button" aria-label="Upload an EDF file">
+                        <div class="dz-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <p class="dz-title">Drop your file here</p>
+                        <p class="dz-sub">or <span class="dz-link">browse</span> to choose a file</p>
+                        <p class="dz-hint">Accepts .edf recordings</p>
+                        <input type="file" id="fileInput" accept=".edf" hidden>
+                        <div class="dz-progress hidden" id="dzProgress"></div>
+                    </div>
+
+                    <div class="settings">
+                        <div class="setting">
+                            <label for="lineFreq">Mains frequency</label>
+                            <div class="select-wrap">
+                                <select id="lineFreq">
+                                    <option value="50">50 Hz (EU / Asia)</option>
+                                    <option value="60">60 Hz (US / Americas)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting">
+                            <label for="threshold">Detection threshold</label>
+                            <div class="segmented" id="segThreshold">
+                                <button type="button" data-value="0.3">0.3</button>
+                                <button type="button" data-value="0.5" class="active">0.5</button>
+                                <button type="button" data-value="0.7">0.7</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROCESSING VIEW -->
+            <section class="view" id="viewProcessing">
+                <div class="processing">
+                    <div class="proc-icon" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <h2 id="procTitle">Processing recording</h2>
+                    <p id="procSub">Reading file metadata…</p>
+                    <div class="proc-track"><div class="proc-fill" id="procFill"></div></div>
+                </div>
+            </section>
+
+            <!-- RESULTS VIEW -->
+            <section class="view" id="viewResults">
+                <div class="results">
+
+                    <div class="filebar">
+                        <div class="filebar-name">
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" stroke="currentColor" stroke-width="1.4"/><path d="M14 3v5h5" stroke="currentColor" stroke-width="1.4"/></svg>
+                            <span id="resFileName" class="truncate">file.edf</span>
+                        </div>
+                        <div class="filebar-metrics">
+                            <div class="metric"><span class="m-label">Duration</span><span id="resDuration">—</span></div>
+                            <div class="metric"><span class="m-label">Channels</span><span id="resChannels">—</span></div>
+                            <div class="metric"><span class="m-label">Rate</span><span id="resSfreq">—</span></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head">
+                            <div class="card-title">Signal viewer</div>
+                            <div class="card-tools">
+                                <button class="tool-btn" id="btnZoomIn" title="Zoom in" aria-label="Zoom in">
+                                    <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M11 8v6M8 11h6M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </button>
+                                <button class="tool-btn" id="btnZoomOut" title="Zoom out" aria-label="Zoom out">
+                                    <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 11h6M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                </button>
+                                <button class="tool-btn" id="btnReset" title="Reset view" aria-label="Reset view">
+                                    <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="eegPlot" class="plot"></div>
+                        </div>
+                        <div class="card-foot legend">
+                            <span class="legend-item"><span class="swatch swatch-signal"></span>Signal per channel</span>
+                            <span class="legend-item"><span class="swatch swatch-event"></span>Seizure region</span>
+                        </div>
+                    </div>
+
+                    <div class="card" id="analysisCard">
+                        <div class="card-head">
+                            <div class="card-title">Analysis</div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="verdict" id="verdict">
+                                <div class="verdict-badge" id="verdictIcon">
+                                    <svg viewBox="0 0 24 24" fill="none" id="verdictOk">
+                                        <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <svg viewBox="0 0 24 24" fill="none" id="verdictWarn">
+                                        <path d="M12 7v6M12 17.5V17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="verdict-text">
+                                    <p class="verdict-title" id="verdictTitle">No seizure detected</p>
+                                    <p class="verdict-sub" id="verdictSub">Recording appears to be normal</p>
+                                </div>
+                            </div>
+
+                            <div class="classification hidden" id="classification">
+                                <div class="class-row">
+                                    <div class="class-label">
+                                        <span class="class-name" id="classTitle">Classification</span>
+                                        <span class="class-conf" id="classConf">Confidence —</span>
+                                    </div>
+                                    <div class="class-tag" id="classTag">—</div>
+                                </div>
+                                <div class="distrib" id="distrib"></div>
+                            </div>
+
+                            <div class="eventlist hidden" id="eventList">
+                                <h4 class="el-title">Detected events</h4>
+                                <div class="el-items" id="elItems"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ERROR VIEW -->
+            <section class="view" id="viewError">
+                <div class="error">
+                    <div class="error-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h2 id="errTitle">Something went wrong</h2>
+                    <p id="errMsg">Unable to process the file.</p>
+                    <button class="btn-primary" id="btnRetry">Try another file</button>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            <span>NeuroScan</span>
+            <span class="dot-sep">·</span>
+            <span>CNN v4 dual-embedding</span>
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
