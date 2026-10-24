@@ -83,10 +83,9 @@ Then open http://127.0.0.1:5000 in your browser.
 ## Usage
 
 1. Drag-and-drop (or browse) a `.edf` file.
-2. Select the recording's **mains frequency** (50 Hz for EU/Asia, 60 Hz for
-   US/Americas) and a detection **threshold**.
-3. NeuroScan preprocesses the signal, runs seizure detection, classifies the
-   subtype, and renders the annotated EEG trace.
+2. NeuroScan preprocesses the signal (50 Hz mains notch, detection threshold
+   0.5), runs seizure detection, classifies the subtype, and renders the
+   annotated EEG trace.
 
 ## Notes
 
