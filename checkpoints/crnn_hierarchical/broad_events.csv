@@ -1,0 +1,47 @@
+subject,phase_a_role,event_id,detected,true_subtype,outcome,pred_subtype,end_to_end_correct
+PN00,train (fully seen by Phase A),PN00-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Phase A),PN00-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Phase A),PN00-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Phase A),PN00-4.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN00,train (fully seen by Phase A),PN00-5.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN01,train (fully seen by Phase A),PN01-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN01,train (fully seen by Phase A),PN01-1.edf#1,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN03,train (fully seen by Phase A),PN03-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN03,train (fully seen by Phase A),PN03-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Phase A),PN05-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Phase A),PN05-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN05,train (fully seen by Phase A),PN05-4.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Phase A),PN06-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Phase A),PN06-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Phase A),PN06-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Phase A),PN06-4.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN06,train (fully seen by Phase A),PN06-5.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN07,train (fully seen by Phase A),PN07-1.edf#0,False,focal_impaired_awareness,missed,,False
+PN09,train (fully seen by Phase A),PN09-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN09,train (fully seen by Phase A),PN09-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN09,train (fully seen by Phase A),PN09-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN10,train (fully seen by Phase A),PN10-1.edf#0,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-10.edf#0,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-2.edf#0,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-3.edf#0,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-4.5.6.edf#0,True,,stage2_unavailable,,False
+PN10,train (fully seen by Phase A),PN10-4.5.6.edf#1,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-4.5.6.edf#2,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-7.8.9.edf#0,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-7.8.9.edf#1,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN10,train (fully seen by Phase A),PN10-7.8.9.edf#2,True,focal_to_bilateral_tonic_clonic,subtyped,focal_impaired_awareness,False
+PN12,train (fully seen by Phase A),PN12-1.2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Phase A),PN12-1.2.edf#1,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Phase A),PN12-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN12,train (fully seen by Phase A),PN12-4.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Phase A early-stop signal),PN13-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Phase A early-stop signal),PN13-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN13,val (Phase A early-stop signal),PN13-3.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN14,val (Phase A early-stop signal),PN14-1.edf#0,False,focal_aware,missed,,False
+PN14,val (Phase A early-stop signal),PN14-2.edf#0,True,focal_aware,subtyped,focal_impaired_awareness,False
+PN14,val (Phase A early-stop signal),PN14-3.edf#0,False,focal_aware,missed,,False
+PN14,val (Phase A early-stop signal),PN14-4.edf#0,True,focal_aware,subtyped,focal_impaired_awareness,False
+PN16,test (unseen by Phase A),PN16-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN16,test (unseen by Phase A),PN16-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Phase A),PN17-1.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True
+PN17,test (unseen by Phase A),PN17-2.edf#0,True,focal_impaired_awareness,subtyped,focal_impaired_awareness,True

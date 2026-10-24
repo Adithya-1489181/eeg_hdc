@@ -1,0 +1,45 @@
+{
+  "protocol": "event-level stratified split (corrected allocator) + fine-tuned backbone + per-class embedding SMOTE",
+  "real_accuracy": 0.9072727272727272,
+  "real_macro_f1": 0.5264611080703036,
+  "control_accuracy": 0.841025641025641,
+  "control_macro_f1": 0.3874489475337732,
+  "v1_synthesis_baseline": {
+    "real_accuracy": 0.933,
+    "real_macro_f1": 0.45,
+    "control_accuracy": 0.846,
+    "control_macro_f1": 0.306
+  },
+  "loso_baseline": {
+    "real_accuracy": 0.893,
+    "real_macro_f1": 0.314,
+    "control_accuracy": 0.822,
+    "control_macro_f1": 0.301
+  },
+  "oversample_ratio": {
+    "focal_aware": 3,
+    "focal_to_bilateral_tonic_clonic": 5
+  },
+  "test_frac": 0.3,
+  "freeze_conv_blocks": 2,
+  "finetune_best_epoch": 40,
+  "train_class_counts_before_smote": {
+    "focal_aware": 29,
+    "focal_impaired_awareness": 1158,
+    "focal_to_bilateral_tonic_clonic": 87
+  },
+  "train_class_counts_after_smote": {
+    "focal_aware": 87,
+    "focal_impaired_awareness": 1158,
+    "focal_to_bilateral_tonic_clonic": 435
+  },
+  "rejected_variant_freeze_conv_blocks_3": {
+    "note": "gentler fine-tune (only last conv block unfrozen) gave higher headline numbers but the FBTC real-vs-control gap nearly vanished -- rejected as mostly patient recognition, not real signal. See closing Notes cell.",
+    "real_accuracy": 0.938,
+    "real_macro_f1": 0.552,
+    "control_accuracy": 0.834,
+    "control_macro_f1": 0.46,
+    "fbtc_recall_real": 0.541,
+    "fbtc_recall_control": 0.533
+  }
+}

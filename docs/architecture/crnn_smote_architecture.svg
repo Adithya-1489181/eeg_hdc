@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 990" width="1000" height="990" role="img"
+     aria-label="CRNN plus SMOTE architecture diagram: a Siena seizure window passes through the frozen Phase A CRNN backbone to produce a 128-number embedding; embeddings are split by seizure event rather than by patient; SMOTE synthesizes additional minority-class embeddings in that space using training data only; a freshly trained classifier head scores real and synthetic embeddings together but is evaluated on real test embeddings only, ending in one of three seizure-subtype labels. An identical pipeline is run as an adversarial control on interictal windows.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #1a2332;
+      --muted: #57616e;
+      --muted-2: #8791a0;
+      --neutral-fill: #f5f6f8;
+      --neutral-border: #dfe3e8;
+      --neutral-accent: #6b7684;
+      --accent-teal: #2f5aa8;
+      --accent-teal-soft: #eaf1fb;
+      --accent-teal-border: #c7d9f2;
+      --accent-amber: #b9791f;
+      --accent-amber-soft: #fdf1de;
+      --accent-amber-border: #f0d9ab;
+      --note-border: #d9b46a;
+    }
+    svg { background: var(--bg); font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    text { fill: var(--ink); }
+    .ink { fill: var(--ink); }
+    .muted { fill: var(--muted); }
+    .muted2 { fill: var(--muted-2); }
+    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+    .title-text { font-size: 15px; font-weight: 700; }
+    .spec-text { font-size: 11px; }
+    .plain-text { font-size: 11.5px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .shape-label { font-size: 10.5px; }
+    .neutral-card { fill: var(--neutral-fill); stroke: var(--neutral-border); }
+    .teal-card { fill: var(--accent-teal-soft); stroke: var(--accent-teal-border); }
+    .amber-card { fill: var(--accent-amber-soft); stroke: var(--accent-amber-border); }
+    .arrow-line { stroke: var(--muted-2); stroke-width: 1.6; fill: none; }
+    .accent-bar-teal { fill: var(--accent-teal); }
+    .accent-bar-amber { fill: var(--accent-amber); }
+    .accent-bar-neutral { fill: var(--neutral-accent); }
+    .note-strip { fill: var(--accent-amber-soft); stroke: var(--note-border); stroke-width: 1.2; stroke-dasharray: 5 4; }
+    .smote-card { fill: var(--accent-amber-soft); stroke: var(--accent-amber-border); stroke-width: 1.2; stroke-dasharray: 6 3; }
+    .model-title { font-size: 19px; font-weight: 700; }
+    .legend-text { font-size: 10.5px; }
+    .badge-text { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; }
+  </style>
+
+  <rect x="0" y="0" width="1000" height="990" fill="var(--bg)"></rect>
+
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted-2)"></path>
+    </marker>
+  </defs>
+
+  <!-- ============ HEADER ============ -->
+  <text x="500" y="32" text-anchor="middle" class="model-title ink">CRNN + SMOTE — Subtype Coverage via Embedding-Space Synthesis</text>
+
+  <rect x="200" y="50" width="10" height="10" rx="2" class="accent-bar-teal"></rect>
+  <text x="216" y="59" class="legend-text muted">frozen — no training here</text>
+  <rect x="430" y="50" width="10" height="10" rx="2" class="accent-bar-amber"></rect>
+  <text x="446" y="59" class="legend-text muted">trained fresh on real + synthetic</text>
+  <rect x="700" y="50" width="10" height="10" rx="2" fill="none" stroke="var(--accent-amber)" stroke-width="1.3" stroke-dasharray="3 2"></rect>
+  <text x="716" y="59" class="legend-text muted">synthetic (SMOTE-generated)</text>
+
+  <g transform="translate(0, 72)">
+    <!-- ============ INPUT ============ -->
+    <text x="100" y="26" class="section-label muted2">Input — one Siena seizure window</text>
+
+    <rect x="100" y="40" width="800" height="92" rx="7" class="neutral-card" stroke-width="1.2"></rect>
+    <rect x="100" y="40" width="5" height="92" class="accent-bar-neutral"></rect>
+    <text x="120" y="66" class="title-text ink">Siena Seizure Window</text>
+    <text x="120" y="88" class="spec-text mono muted">10s × 18 channels × 256 Hz → 2560 samples per window</text>
+    <text x="120" y="110" class="plain-text muted">Same harmonized windows Stage 2 and Phase B already use</text>
+
+    <line x1="500" y1="132" x2="500" y2="178" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <text x="500" y="150" text-anchor="middle" class="shape-label mono muted2">(18 channels, 2560 samples)</text>
+
+    <!-- ============ FROZEN BACKBONE ============ -->
+    <text x="100" y="164" class="section-label muted2">Frozen backbone — reused from Phase A, not retrained</text>
+
+    <rect x="100" y="178" width="800" height="92" rx="7" class="teal-card" stroke-width="1.2"></rect>
+    <rect x="100" y="178" width="5" height="92" class="accent-bar-teal"></rect>
+    <rect x="768" y="188" width="112" height="20" rx="4" fill="var(--accent-teal)"></rect>
+    <text x="824" y="202" text-anchor="middle" class="badge-text" fill="#ffffff">FROZEN</text>
+    <text x="120" y="204" class="title-text ink">CRNN Backbone</text>
+    <text x="120" y="226" class="spec-text mono muted">4× Conv1d blocks → BiLSTM(128→64, bidirectional) → Attention Pooling</text>
+    <text x="120" y="248" class="plain-text muted">Exact weights Phase A learned for detection; zero gradient updates here</text>
+
+    <line x1="500" y1="270" x2="500" y2="316" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <text x="500" y="288" text-anchor="middle" class="shape-label mono muted2">128-number embedding (fixed for this window)</text>
+
+    <!-- ============ EVENT-LEVEL SPLIT ============ -->
+    <text x="100" y="302" class="section-label muted2">Event-level split — not patient-level LOSO</text>
+
+    <rect x="100" y="316" width="800" height="92" rx="7" class="neutral-card" stroke-width="1.2"></rect>
+    <rect x="100" y="316" width="5" height="92" class="accent-bar-neutral"></rect>
+    <text x="120" y="342" class="title-text ink">Split by seizure event, not by patient</text>
+    <text x="120" y="364" class="spec-text mono muted">A patient's other seizure events can land on either side of the split</text>
+    <text x="120" y="386" class="plain-text muted">Guarantees real train AND test examples of every subtype — strict LOSO cannot</text>
+
+    <line x1="500" y1="408" x2="500" y2="454" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <text x="500" y="426" text-anchor="middle" class="shape-label mono muted2">train embeddings (real only, so far)</text>
+
+    <!-- ============ SMOTE ============ -->
+    <text x="100" y="440" class="section-label muted2">SMOTE — synthesize minority embeddings (train set only)</text>
+
+    <rect x="100" y="454" width="800" height="92" rx="7" class="smote-card"></rect>
+    <rect x="100" y="454" width="5" height="92" class="accent-bar-amber"></rect>
+    <text x="120" y="480" class="title-text ink">Embedding-space SMOTE</text>
+    <text x="120" y="502" class="spec-text mono muted">Interpolates between nearest same-class neighbors, train set only</text>
+    <text x="120" y="524" class="spec-text mono muted">focal_aware 29→87 · tonic_clonic 68→204 · impaired_awareness 322 (unchanged)</text>
+
+    <line x1="500" y1="546" x2="500" y2="592" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <text x="500" y="564" text-anchor="middle" class="shape-label mono muted2">real + synthetic embeddings (train only)</text>
+
+    <!-- ============ CLASSIFIER HEAD ============ -->
+    <text x="100" y="578" class="section-label muted2">Classifier head — freshly trained</text>
+
+    <rect x="100" y="592" width="800" height="92" rx="7" class="amber-card" stroke-width="1.2"></rect>
+    <rect x="100" y="592" width="5" height="92" class="accent-bar-amber"></rect>
+    <text x="120" y="618" class="title-text ink">Subtype Head (new)</text>
+    <text x="120" y="640" class="spec-text mono muted">Linear(128→64) → ReLU → Dropout → Linear(64→3) → Softmax</text>
+    <text x="120" y="662" class="plain-text muted">Trained on real + synthetic together; scored on real test embeddings only</text>
+
+    <line x1="260" y1="684" x2="260" y2="712" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <line x1="500" y1="684" x2="500" y2="712" class="arrow-line" marker-end="url(#arrow2)"></line>
+    <line x1="740" y1="684" x2="740" y2="712" class="arrow-line" marker-end="url(#arrow2)"></line>
+
+    <!-- ============ OUTPUTS ============ -->
+    <rect x="100" y="716" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="225" y="748" text-anchor="middle" class="plain-text ink" font-weight="700">Focal Aware</text>
+    <text x="225" y="768" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+
+    <rect x="375" y="716" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="500" y="740" text-anchor="middle" class="plain-text ink" font-weight="700">Focal Impaired</text>
+    <text x="500" y="756" text-anchor="middle" class="plain-text ink" font-weight="700">Awareness</text>
+    <text x="500" y="778" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+
+    <rect x="650" y="716" width="250" height="80" rx="7" class="amber-card" stroke-width="1.4"></rect>
+    <text x="775" y="740" text-anchor="middle" class="plain-text ink" font-weight="700">Focal → Bilateral</text>
+    <text x="775" y="756" text-anchor="middle" class="plain-text ink" font-weight="700">Tonic-Clonic</text>
+    <text x="775" y="778" text-anchor="middle" class="shape-label muted">highest of 3 scores</text>
+
+    <!-- ============ ADVERSARIAL CONTROL NOTE ============ -->
+    <rect x="100" y="822" width="800" height="50" rx="6" class="note-strip"></rect>
+    <text x="500" y="844" text-anchor="middle" class="shape-label mono ink">Adversarial control: identical pipeline run on interictal windows relabeled</text>
+    <text x="500" y="862" text-anchor="middle" class="shape-label mono ink">with each patient's own subtype — checks this isn't just patient recognition</text>
+  </g>
+</svg>

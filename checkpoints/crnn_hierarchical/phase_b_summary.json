@@ -1,0 +1,19 @@
+{
+  "real_accuracy": 0.8925438596491229,
+  "control_accuracy": 0.8215384615384616,
+  "real_macro_f1": 0.31440710699111624,
+  "control_macro_f1": 0.30067567567567566,
+  "n_patients": 13,
+  "class_names": [
+    "focal_aware",
+    "focal_impaired_awareness",
+    "focal_to_bilateral_tonic_clonic"
+  ],
+  "freeze_conv_blocks": 2,
+  "stage2_baseline_no_transfer": {
+    "real_accuracy": 0.897,
+    "control_accuracy": 0.816,
+    "real_macro_f1": 0.315,
+    "control_macro_f1": 0.3
+  }
+}
