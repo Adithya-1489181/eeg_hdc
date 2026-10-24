@@ -516,22 +516,17 @@ class SeizureAnalyzer:
                 all_embs.append(embs)
             all_embs = np.concatenate(all_embs)
 
-            preds = self.classifier.predict(all_embs)
             probas = self.classifier.predict_proba(all_embs)
-
-            unique, counts = np.unique(preds, return_counts=True)
-            majority_idx = unique[np.argmax(counts)]
-            majority_conf = counts.max() / counts.sum()
-
             mean_probas = probas.mean(axis=0)
+            top_idx = int(np.argmax(mean_probas))
 
             results.append({
                 "start_s": float(ev_start_s),
                 "end_s": float(ev_end_s),
                 "duration_s": float(ev_end_s - ev_start_s),
-                "predicted_class": CLASS_NAMES[majority_idx],
-                "predicted_class_key": CLASS_KEYS[majority_idx],
-                "confidence": float(majority_conf),
+                "predicted_class": CLASS_NAMES[top_idx],
+                "predicted_class_key": CLASS_KEYS[top_idx],
+                "confidence": float(mean_probas[top_idx]),
                 "probabilities": {
                     CLASS_KEYS[i]: float(mean_probas[i])
                     for i in range(len(CLASS_KEYS))
