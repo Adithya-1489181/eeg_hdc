@@ -29,8 +29,6 @@
     const els = {
         dropZone: $("dropZone"),
         fileInput: $("fileInput"),
-        lineFreq: $("lineFreq"),
-        segThreshold: $("segThreshold"),
 
         viewUpload: $("viewUpload"),
         viewProcessing: $("viewProcessing"),
@@ -68,8 +66,6 @@
         errTitle: $("errTitle"),
         errMsg: $("errMsg"),
     };
-
-    let threshold = 0.5;
 
     /* ---------------- Model status ---------------- */
 
@@ -144,15 +140,6 @@
         });
 
         els.btnRetry.addEventListener("click", () => showView("upload"));
-
-        els.segThreshold.addEventListener("click", (e) => {
-            const btn = e.target.closest("button[data-value]");
-            if (!btn) return;
-            threshold = parseFloat(btn.dataset.value);
-            els.segThreshold
-                .querySelectorAll("button")
-                .forEach((b) => b.classList.toggle("active", b === btn));
-        });
     }
 
     function handleFile(file) {
@@ -164,15 +151,11 @@
         els.dzProgress.classList.remove("hidden");
         els.dropZone.classList.add("is-busy");
 
-        const lineFreq = parseInt(els.lineFreq.value, 10);
-
         showView("processing");
         runProcessingFrames();
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("line_freq", lineFreq);
-        formData.append("threshold", threshold);
 
         fetch("/api/analyze", {
             method: "POST",
