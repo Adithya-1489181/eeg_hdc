@@ -21,6 +21,8 @@
     const PLOT_ZERO = "rgba(0, 0, 0, 0.16)";
     const PLOT_TICK = "rgba(0, 0, 0, 0.22)";
 
+    const MAX_FILE_SIZE_MB = 800;
+
     let currentData = null;
     let plotLayout = null;
 
@@ -148,6 +150,16 @@
             return;
         }
 
+        const sizeMB = file.size / (1024 * 1024);
+        if (sizeMB > MAX_FILE_SIZE_MB) {
+            fail(
+                "File too large",
+                `This recording is ${sizeMB.toFixed(0)} MB; the server accepts ` +
+                    `files up to ${MAX_FILE_SIZE_MB} MB. Try a shorter clip.`
+            );
+            return;
+        }
+
         els.dzProgress.classList.remove("hidden");
         els.dropZone.classList.add("is-busy");
 
@@ -161,7 +173,16 @@
             method: "POST",
             body: formData,
         })
-            .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+            .then((res) =>
+                res
+                    .json()
+                    .catch(() => {
+                        throw new Error(
+                            `Server returned an unexpected response (HTTP ${res.status}).`
+                        );
+                    })
+                    .then((data) => ({ ok: res.ok, data }))
+            )
             .then(({ ok, data }) => {
                 if (!ok) {
                     throw new Error((data && data.error) || "Analysis failed.");

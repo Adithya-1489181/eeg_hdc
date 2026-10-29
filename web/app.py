@@ -4,11 +4,27 @@ import traceback
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
+from werkzeug.exceptions import HTTPException
 
 from inference import SeizureAnalyzer
 
+MAX_UPLOAD_MB = 800
+
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 500 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_MB * 1024 * 1024
+
+
+@app.errorhandler(413)
+def handle_too_large(e):
+    return jsonify({
+        "error": f"File too large. The server accepts recordings up to "
+                 f"{MAX_UPLOAD_MB} MB; please upload a shorter clip.",
+    }), 413
+
+
+@app.errorhandler(HTTPException)
+def handle_http_exception(e):
+    return jsonify({"error": e.description}), e.code
 
 analyzer = SeizureAnalyzer()
 models_loaded = False

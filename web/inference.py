@@ -219,6 +219,7 @@ class SeizureAnalyzer:
             CNN_DROPOUT, RNN_DROPOUT, head_dropout=0.5,
         ).to(self.device)
         ft_model.load_state_dict(ckpt_ft["model_state"])
+        ft_model.eval()
         self.finetuned_backbone = ft_model.backbone
         for p in self.finetuned_backbone.parameters():
             p.requires_grad = False
@@ -552,7 +553,11 @@ class SeizureAnalyzer:
         if seizure_events:
             classifications = self.classify_subtypes(signal, seizure_events)
 
-        downsample_factor = 4
+        n_samples = signal.shape[1]
+        target_points_per_channel = 15000
+        downsample_factor = max(
+            1, int(np.ceil(n_samples / target_points_per_channel))
+        )
         ds_sfreq = TARGET_SFREQ / downsample_factor
         traces = []
         for ch in range(n_channels):
